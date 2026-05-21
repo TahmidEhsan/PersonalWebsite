@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vercel ls *)",
+      "PowerShell(vercel ls 2>&1)"
+    ]
+  }
+}
