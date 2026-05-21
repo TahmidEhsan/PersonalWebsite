@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack — Tahmid Ehsan</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-inner { padding: 64px 56px 80px; }
+.page-title { font-family: var(--display); font-size: 44px; font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-bottom: 6px; }
+.page-sub { font-size: 13px; color: var(--text-2); margin-top: 6px; max-width: 460px; }
+
+/* Two-column layout */
+.stack-layout { display: grid; grid-template-columns: 1fr 380px; gap: 1px; background: var(--border); margin-bottom: 48px; }
+.stack-main { background: var(--bg); padding: 0; }
+.stack-aside { background: var(--bg); padding: 32px 28px; border-left: 0.5px solid var(--border); }
+
+/* Skill categories */
+.skill-cat { border-bottom: 0.5px solid var(--border); padding: 24px 28px; }
+.skill-cat:last-child { border-bottom: none; }
+.skill-cat-name { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; }
+.skill-rows { display: flex; flex-direction: column; gap: 10px; }
+.skill-row { display: flex; align-items: center; gap: 12px; }
+.skill-name { font-size: 12px; color: var(--text-2); width: 110px; flex-shrink: 0; }
+.skill-bar { flex: 1; height: 2px; background: var(--border); position: relative; }
+.skill-fill { height: 100%; background: var(--accent); position: absolute; left: 0; transition: width 1s cubic-bezier(.4,0,.2,1); }
+.skill-fill.dim { background: var(--text-3); }
+.skill-pct { font-family: var(--mono); font-size: 10px; color: var(--text-3); width: 32px; text-align: right; flex-shrink: 0; }
+
+/* Aside */
+.aside-section { margin-bottom: 28px; }
+.aside-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.aside-label::after { content:''; flex:1; height:.5px; background:var(--border); }
+
+.arch-diagram {
+  background: var(--bg-raised); border: 0.5px solid var(--border);
+  padding: 14px 16px; font-family: var(--mono); font-size: 10px;
+  line-height: 1.9; margin-bottom: 16px;
+}
+.now-items { display: flex; flex-direction: column; gap: 8px; }
+.now-item { padding: 10px 12px; background: var(--bg-raised); border: 0.5px solid var(--border); }
+.now-item-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 3px; }
+.now-item-main { font-size: 12px; color: var(--text); }
+.now-item-sub { font-family: var(--mono); font-size: 9px; color: var(--text-3); margin-top: 1px; }
+
+/* Themes grid */
+.theme-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 48px; }
+.theme-cell { background: var(--bg); padding: 16px 18px; }
+.theme-cell-icon { font-family: var(--mono); font-size: 16px; color: var(--text-3); margin-bottom: 8px; }
+.theme-cell-title { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+.theme-cell-items { font-size: 11px; color: var(--text-2); line-height: 1.7; }
+
+/* Concepts */
+.concepts-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.concept-pill {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .04em;
+  padding: 5px 12px; background: var(--bg-raised);
+  border: 0.5px solid var(--border); color: var(--text-2);
+  transition: border-color .15s, color .15s;
+}
+.concept-pill:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div class="page-inner">
+
+  <div class="fu fu-1" style="margin-bottom:44px">
+    <div class="eyebrow">04 / stack</div>
+    <div class="page-title">Technical ecosystem</div>
+    <div class="page-sub">Organized by engineering identity, not by language alphabetically. The tools I reach for and why.</div>
+  </div>
+
+  <!-- Theme categories -->
+  <div class="section-label fu fu-2">engineering identity</div>
+  <div class="theme-grid fu fu-2">
+    <div class="theme-cell">
+      <div class="theme-cell-icon">[01]</div>
+      <div class="theme-cell-title">Infrastructure &amp; Backend</div>
+      <div class="theme-cell-items">FastAPI · Node.js · REST APIs · async processing · distributed systems · backend integration · system design</div>
+    </div>
+    <div class="theme-cell">
+      <div class="theme-cell-icon">[02]</div>
+      <div class="theme-cell-title">AI &amp; Data Systems</div>
+      <div class="theme-cell-items">PyTorch · TensorFlow · OCR pipelines · RAG systems · LlamaIndex · inference workflows · edge AI</div>
+    </div>
+    <div class="theme-cell">
+      <div class="theme-cell-icon">[03]</div>
+      <div class="theme-cell-title">Cloud &amp; DevOps</div>
+      <div class="theme-cell-items">AWS (S3, EC2) · Docker · CI/CD · Linux · automation workflows · cloud migration · environment management</div>
+    </div>
+    <div class="theme-cell">
+      <div class="theme-cell-icon">[04]</div>
+      <div class="theme-cell-title">Reliability &amp; Performance</div>
+      <div class="theme-cell-items">benchmarking · observability · validation systems · latency optimization · structured logging · drift detection</div>
+    </div>
+  </div>
+
+  <!-- Main proficiency + aside -->
+  <div class="section-label fu fu-2">proficiency depth</div>
+  <div class="stack-layout fu fu-3">
+    <div class="stack-main">
+
+      <div class="skill-cat">
+        <div class="skill-cat-name">core languages</div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-name">Python</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="93"></div></div><div class="skill-pct">93</div></div>
+          <div class="skill-row"><div class="skill-name">JavaScript</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="72"></div></div><div class="skill-pct">72</div></div>
+          <div class="skill-row"><div class="skill-name">SQL</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="78"></div></div><div class="skill-pct">78</div></div>
+          <div class="skill-row"><div class="skill-name">Java</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="60"></div></div><div class="skill-pct">60</div></div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-name">ai / ml</div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-name">PyTorch</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="82"></div></div><div class="skill-pct">82</div></div>
+          <div class="skill-row"><div class="skill-name">TensorFlow</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="74"></div></div><div class="skill-pct">74</div></div>
+          <div class="skill-row"><div class="skill-name">LlamaIndex</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="70"></div></div><div class="skill-pct">70</div></div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-name">backend frameworks</div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-name">FastAPI</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="86"></div></div><div class="skill-pct">86</div></div>
+          <div class="skill-row"><div class="skill-name">Node.js</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="70"></div></div><div class="skill-pct">70</div></div>
+          <div class="skill-row"><div class="skill-name">React</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="62"></div></div><div class="skill-pct">62</div></div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-name">cloud &amp; infra</div>
+        <div class="skill-rows">
+          <div class="skill-row"><div class="skill-name">AWS</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="68"></div></div><div class="skill-pct">68</div></div>
+          <div class="skill-row"><div class="skill-name">Docker</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="72"></div></div><div class="skill-pct">72</div></div>
+          <div class="skill-row"><div class="skill-name">Linux</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="75"></div></div><div class="skill-pct">75</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stack-aside">
+      <div class="aside-section">
+        <div class="aside-label">how i think</div>
+        <div class="arch-diagram">
+          [problem] → [system map]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [identify bottlenecks]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [design for failure]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [instrument + observe]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [measure, not guess]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [ship with confidence]
+        </div>
+      </div>
+
+      <div class="aside-section">
+        <div class="aside-label">present state</div>
+        <div class="now-items">
+          <div class="now-item">
+            <div class="now-item-label">studying</div>
+            <div class="now-item-main">AWS Solutions Architect</div>
+            <div class="now-item-sub">associate cert · in progress</div>
+          </div>
+          <div class="now-item">
+            <div class="now-item-label">grinding</div>
+            <div class="now-item-main">LeetCode — graphs + DP</div>
+            <div class="now-item-sub">medium tier focus</div>
+          </div>
+          <div class="now-item">
+            <div class="now-item-label">reading</div>
+            <div class="now-item-main">Designing Data-Intensive Apps</div>
+            <div class="now-item-sub">Kleppmann · ch 8</div>
+          </div>
+          <div class="now-item">
+            <div class="now-item-label">watching</div>
+            <div class="now-item-main">Severance S2 / The Bear</div>
+            <div class="now-item-sub">also into history docs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aside-section">
+        <div class="aside-label">cert track</div>
+        <div class="now-items">
+          <div class="now-item" style="border-color:rgba(201,186,155,.2)">
+            <div class="now-item-label" style="color:var(--accent)">in progress</div>
+            <div class="now-item-main">AWS Certified SAA</div>
+            <div class="now-item-sub">exam pending</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Engineering concepts -->
+  <div class="section-label fu fu-4">engineering concepts</div>
+  <div class="concepts-wrap fu fu-4">
+    <span class="concept-pill">data structures</span>
+    <span class="concept-pill">algorithms</span>
+    <span class="concept-pill">OOP + design patterns</span>
+    <span class="concept-pill">distributed systems</span>
+    <span class="concept-pill">async processing</span>
+    <span class="concept-pill">system design</span>
+    <span class="concept-pill">latency optimization</span>
+    <span class="concept-pill">observability</span>
+    <span class="concept-pill">REST API design</span>
+    <span class="concept-pill">ETL / ELT workflows</span>
+    <span class="concept-pill">message queues</span>
+    <span class="concept-pill">caching strategies</span>
+    <span class="concept-pill">drift detection</span>
+    <span class="concept-pill">model monitoring</span>
+    <span class="concept-pill">inference pipelines</span>
+    <span class="concept-pill">HTTP · DNS · TLS</span>
+    <span class="concept-pill">API authentication</span>
+    <span class="concept-pill">CI/CD pipelines</span>
+    <span class="concept-pill">Agile / SDLC</span>
+    <span class="concept-pill">reliability engineering</span>
+  </div>
+
+</div>
+</div>
+<script src="nav.js"></script>
+<script>
+/* animate skill bars on load */
+setTimeout(() => {
+  document.querySelectorAll('.skill-fill').forEach(el => {
+    el.style.width = el.dataset.w + '%';
+  });
+}, 200);
+</script>
+</body>
+</html>

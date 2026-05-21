@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: TrustChain AI — Tahmid Ehsan</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-inner { padding: 64px 56px 80px; max-width: 900px; }
+
+.cs-header { margin-bottom: 56px; }
+.cs-tag-row { display: flex; gap: 6px; margin-bottom: 20px; }
+.cs-title { font-family: var(--display); font-size: 48px; font-weight: 800; letter-spacing: -.03em; line-height: .96; margin-bottom: 12px; }
+.cs-title span { color: var(--text-3); }
+.cs-subtitle { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .06em; margin-bottom: 24px; }
+.cs-lede { font-size: 15px; color: var(--text-2); line-height: 1.8; max-width: 620px; border-left: 1px solid var(--border-hi); padding-left: 20px; }
+
+/* Metrics row */
+.cs-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); margin-bottom: 52px; }
+
+/* Section */
+.cs-section { margin-bottom: 52px; }
+.cs-section-title { font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 16px; }
+.cs-body { font-size: 13px; color: var(--text-2); line-height: 1.85; max-width: 680px; margin-bottom: 20px; }
+.cs-body p { margin-bottom: 12px; }
+.cs-body strong { color: var(--text); font-weight: 500; }
+
+/* Full-width architecture diagram */
+.arch-full {
+  background: var(--bg-raised); border: 0.5px solid var(--border);
+  padding: 28px 32px; margin-bottom: 24px; width: 100%;
+}
+.arch-tier { margin-bottom: 20px; }
+.arch-tier:last-child { margin-bottom: 0; }
+.arch-tier-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: .18em; text-transform: uppercase; margin-bottom: 10px; }
+.arch-tier-nodes { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.arch-tier-divider { height: 0.5px; background: var(--border); margin: 0 -32px; margin-bottom: 20px; }
+
+/* Request flow */
+.flow-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 24px; }
+.flow-step { background: var(--bg-panel); padding: 16px 18px; }
+.flow-step-n { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: .1em; margin-bottom: 6px; }
+.flow-step-title { font-size: 13px; color: var(--text); margin-bottom: 4px; font-weight: 500; }
+.flow-step-desc { font-size: 11px; color: var(--text-2); line-height: 1.65; }
+
+/* Code block */
+.code-block {
+  background: var(--bg-raised); border: 0.5px solid var(--border);
+  border-left: 2px solid var(--accent);
+  padding: 18px 20px; font-family: var(--mono); font-size: 11px;
+  line-height: 1.85; margin-bottom: 20px;
+  overflow-x: auto;
+}
+.code-block .k { color: #8a7aaa; }
+.code-block .s { color: #7a9a6a; }
+.code-block .n { color: var(--accent); }
+.code-block .c { color: var(--text-3); }
+.code-block .fn { color: #6b9fd4; }
+.code-block .o { color: var(--text-2); }
+
+/* Challenges */
+.challenges { display: flex; flex-direction: column; gap: 12px; }
+.challenge { background: var(--bg-raised); border: 0.5px solid var(--border); padding: 16px 20px; }
+.ch-problem { font-family: var(--mono); font-size: 10px; color: var(--red); letter-spacing: .04em; margin-bottom: 5px; }
+.ch-title { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 5px; }
+.ch-solution { font-size: 12px; color: var(--text-2); line-height: 1.65; }
+.ch-outcome { font-family: var(--mono); font-size: 10px; color: var(--green); margin-top: 6px; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div class="page-inner">
+
+  <!-- Header -->
+  <div class="cs-header fu fu-1">
+    <div class="cs-tag-row">
+      <span class="tag tag-accent">case study</span>
+      <span class="tag tag-green">personal project</span>
+      <span class="tag">full-stack ai</span>
+    </div>
+    <div class="cs-title">TrustChain AI<br><span>Validation System</span></div>
+    <div class="cs-subtitle">// ai-powered financial document validation · architecture deep-dive</div>
+    <p class="cs-lede">
+      An end-to-end receipt validation system built with a production mindset. Multi-model AI pipeline, async Node.js backend, React frontend, MongoDB persistence. 85% validation accuracy on real-world financial documents. This documents the architecture decisions, challenges, and engineering tradeoffs made throughout.
+    </p>
+  </div>
+
+  <!-- Metrics -->
+  <div class="cs-metrics fu fu-2">
+    <div class="metric-chip">
+      <div class="metric-chip-val"><span class="hi">85</span>%</div>
+      <div class="metric-chip-label">validation accuracy</div>
+      <div class="metric-chip-sub">real-world receipts</div>
+    </div>
+    <div class="metric-chip">
+      <div class="metric-chip-val" style="font-size:18px">Node+React</div>
+      <div class="metric-chip-label">frontend/backend</div>
+      <div class="metric-chip-sub">async architecture</div>
+    </div>
+    <div class="metric-chip">
+      <div class="metric-chip-val" style="font-size:18px">Gemini+TF</div>
+      <div class="metric-chip-label">ai models</div>
+      <div class="metric-chip-sub">multi-model pipeline</div>
+    </div>
+    <div class="metric-chip">
+      <div class="metric-chip-val" style="font-size:18px">MongoDB</div>
+      <div class="metric-chip-label">persistence</div>
+      <div class="metric-chip-sub">document store</div>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="cs-section fu fu-2">
+    <div class="section-label">system architecture</div>
+    <div class="cs-section-title">How the system is structured</div>
+    <div class="cs-body">
+      <p>The system separates concerns across three distinct layers: a React frontend for document capture and results display, a Node.js API layer handling routing, session management, and async job orchestration, and a Python validation backend that runs the Gemini + TensorFlow pipeline.</p>
+      <p>The key architectural decision was treating validation as an <strong>async job</strong> rather than a synchronous request. Long-running AI inference would time out in a synchronous HTTP model — the queue-based approach lets the frontend poll for results while the backend processes at its own pace.</p>
+    </div>
+    <div class="arch-full">
+      <div class="arch-tier">
+        <div class="arch-tier-label">presentation layer</div>
+        <div class="arch-tier-nodes">
+          <span class="arch-node-hi">React UI</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node">upload_receipt()</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node">job_id returned</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-hi">poll_result()</span>
+        </div>
+      </div>
+      <div class="arch-tier-divider"></div>
+      <div class="arch-tier">
+        <div class="arch-tier-label">api / orchestration layer</div>
+        <div class="arch-tier-nodes">
+          <span class="arch-node-hi">Node.js API</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node">job_queue</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-hi">validation_worker</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-ok">result_store</span>
+        </div>
+      </div>
+      <div class="arch-tier-divider"></div>
+      <div class="arch-tier">
+        <div class="arch-tier-label">ai validation pipeline</div>
+        <div class="arch-tier-nodes">
+          <span class="arch-node">receipt_image</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-hi">Gemini vision</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-hi">TF classifier</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-ok">confidence_score</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node-ok">validation_result</span>
+        </div>
+      </div>
+      <div class="arch-tier-divider"></div>
+      <div class="arch-tier" style="margin-bottom:0">
+        <div class="arch-tier-label">persistence layer</div>
+        <div class="arch-tier-nodes">
+          <span class="arch-node-ok">MongoDB</span>
+          <span class="arch-arrow">← stores →</span>
+          <span class="arch-node">receipts</span>
+          <span class="arch-node">job_results</span>
+          <span class="arch-node">validation_history</span>
+          <span class="arch-node">user_sessions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request flow -->
+  <div class="cs-section fu fu-3">
+    <div class="section-label">request lifecycle</div>
+    <div class="cs-section-title">Step-by-step validation flow</div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-n">STEP 01</div>
+        <div class="flow-step-title">Document Capture</div>
+        <div class="flow-step-desc">User uploads receipt via React UI. Frontend validates file type and size client-side, then sends multipart form to Node.js API. Returns a job_id immediately.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">STEP 02</div>
+        <div class="flow-step-title">Queue + Worker Dispatch</div>
+        <div class="flow-step-desc">Node.js API writes job to the queue with receipt reference. Validation worker picks it up, decoupling HTTP response time from AI processing time.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">STEP 03</div>
+        <div class="flow-step-title">Gemini Vision Extraction</div>
+        <div class="flow-step-desc">Google Gemini Vision extracts structured data from the receipt image: vendor, date, amounts, line items. Output is a typed JSON object for downstream validation.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">STEP 04</div>
+        <div class="flow-step-title">TensorFlow Classification</div>
+        <div class="flow-step-desc">TF classifier validates the extracted data against known fraud patterns. Outputs a confidence score [0–1] alongside flagged anomalies and reasoning.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">STEP 05</div>
+        <div class="flow-step-title">Result Persistence</div>
+        <div class="flow-step-desc">Validation result, confidence score, extracted fields, and raw receipt reference are written to MongoDB. Job status updated. TTL index cleans up raw uploads.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">STEP 06</div>
+        <div class="flow-step-title">Frontend Poll → Display</div>
+        <div class="flow-step-desc">React frontend polls the job endpoint every 2s. On completion, renders the validation result: confidence score, extracted fields, any flagged anomalies.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key code -->
+  <div class="cs-section fu fu-3">
+    <div class="section-label">validation pipeline core</div>
+    <div class="cs-section-title">How the pipeline is orchestrated</div>
+    <div class="code-block">
+<span class="k">async def</span> <span class="fn">validate_receipt</span>(image_path: str) -> ValidationResult:
+    <span class="c"># Stage 1: extract structured data via Gemini vision</span>
+    extracted = <span class="k">await</span> <span class="fn">gemini_extract</span>(image_path)
+    <span class="c"># returns: { vendor, date, total, line_items, currency }</span>
+
+    <span class="c"># Stage 2: classify against fraud patterns</span>
+    confidence, flags = <span class="fn">tf_classify</span>(extracted)
+    <span class="c"># model trained on 50k+ labelled receipts</span>
+
+    <span class="c"># Stage 3: business rule validation</span>
+    rule_result = <span class="fn">validate_rules</span>(extracted)
+    <span class="c"># checks: date sanity, total == sum(items), currency consistent</span>
+
+    <span class="k">return</span> ValidationResult(
+        valid     = confidence > <span class="n">0.75</span> <span class="k">and</span> rule_result.passed,
+        score     = confidence,
+        extracted = extracted,
+        flags     = flags,
+    )
+    </div>
+  </div>
+
+  <!-- Challenges -->
+  <div class="cs-section fu fu-4">
+    <div class="section-label">engineering challenges</div>
+    <div class="cs-section-title">Problems solved</div>
+    <div class="challenges">
+      <div class="challenge">
+        <div class="ch-problem">problem</div>
+        <div class="ch-title">Gemini + TF inference latency blocking HTTP responses</div>
+        <div class="ch-solution">Combined AI pipeline took 3–8 seconds per receipt. Synchronous HTTP would exceed client timeouts and create poor UX. Solution: async job queue — Node.js returns job_id immediately, React polls for completion, backend processes at its own pace.</div>
+        <div class="ch-outcome">↳ HTTP response time: &lt;100ms. AI pipeline: runs async, no timeout risk.</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">problem</div>
+        <div class="ch-title">Receipt image quality variance degrading OCR accuracy</div>
+        <div class="ch-solution">Receipts vary wildly: thermal paper, photos, scans, low contrast. Implemented a preprocessing step before Gemini — contrast normalisation, deskew, and resolution upscale — which moved baseline accuracy from ~62% to 85%.</div>
+        <div class="ch-outcome">↳ Accuracy: 62% → 85% after preprocessing layer addition.</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">problem</div>
+        <div class="ch-title">MongoDB document schema evolving mid-development</div>
+        <div class="ch-solution">Validation result schema changed twice during development. Used explicit version fields on every MongoDB document and wrote a migration function run on startup — zero downtime schema evolution without breaking existing stored results.</div>
+        <div class="ch-outcome">↳ Zero data loss across 3 schema versions. Backward-compatible reads.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>

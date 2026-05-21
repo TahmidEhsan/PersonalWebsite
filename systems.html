@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Systems — Tahmid Ehsan</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-inner { padding: 64px 56px 80px; }
+.page-hdr { margin-bottom: 52px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.page-title { font-family: var(--display); font-size: 44px; font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-bottom: 6px; }
+.page-sub { font-size: 13px; color: var(--text-2); line-height: 1.65; max-width: 420px; }
+
+/* Project grid */
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 64px; }
+.proj-card {
+  background: var(--bg); padding: 28px 30px;
+  transition: background .2s; cursor: pointer;
+}
+.proj-card:hover { background: var(--bg-raised); }
+.proj-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.proj-id { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: .1em; }
+.proj-tags { display: flex; gap: 4px; }
+.proj-name { font-family: var(--display); font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 5px; }
+.proj-type { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: .06em; margin-bottom: 12px; }
+.proj-desc { font-size: 12px; color: var(--text-2); line-height: 1.75; margin-bottom: 16px; }
+.proj-arch {
+  background: var(--bg-panel); border: 0.5px solid var(--border);
+  padding: 10px 12px; font-family: var(--mono); font-size: 9px;
+  color: var(--text-2); line-height: 1.85; margin-bottom: 14px;
+}
+.proj-arch .hl { color: var(--accent); }
+.proj-arch .ok { color: var(--green); }
+.proj-arch .arr { color: var(--text-3); }
+.proj-metrics { display: flex; gap: 20px; padding-top: 12px; border-top: 0.5px solid var(--border); }
+.pm-val { font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: -.01em; color: var(--text); }
+.pm-label { font-family: var(--mono); font-size: 8px; color: var(--text-3); letter-spacing: .1em; text-transform: uppercase; margin-top: 1px; }
+
+.case-cta {
+  grid-column: 1 / -1; background: var(--bg-raised);
+  padding: 20px 30px; display: flex; align-items: center; justify-content: space-between;
+}
+.case-cta-text { font-size: 13px; color: var(--text-2); }
+.case-cta-text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
+
+/* Timeline */
+.timeline { display: grid; grid-template-columns: 160px 1px 1fr; }
+.tl-date { padding: 0 20px 36px 0; text-align: right; }
+.tl-date-m { font-family: var(--mono); font-size: 11px; color: var(--text-2); }
+.tl-date-s { font-family: var(--mono); font-size: 10px; color: var(--text-3); margin-top: 2px; }
+.tl-spine { background: var(--border); position: relative; }
+.tl-spine::before {
+  content:''; position:absolute; top:6px; left:50%; transform:translateX(-50%);
+  width:5px; height:5px; border-radius:50%; background:var(--text-3);
+}
+.tl-spine.live::before { background:var(--green); }
+.tl-body { padding: 0 0 36px 28px; }
+.tl-org { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.tl-role { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: .06em; margin-bottom: 8px; }
+.tl-desc { font-size: 12px; color: var(--text-2); line-height: 1.7; }
+.tl-metric {
+  display: inline-block; font-family: var(--mono); font-size: 10px;
+  color: var(--green); background: var(--green-dim);
+  padding: 2px 9px; margin-top: 8px; letter-spacing: .04em;
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div class="page-inner">
+
+  <div class="page-hdr fu fu-1">
+    <div>
+      <div class="eyebrow">02 / systems</div>
+      <div class="page-title">What I've built</div>
+      <div class="page-sub">Production systems with real constraints, real metrics, and real tradeoffs. Not tutorials.</div>
+    </div>
+  </div>
+
+  <!-- Project grid -->
+  <div class="section-label fu fu-2">featured systems</div>
+  <div class="proj-grid">
+
+    <div class="proj-card fu fu-2">
+      <div class="proj-head">
+        <div class="proj-id">SYS-001</div>
+        <div class="proj-tags">
+          <span class="tag tag-green">production</span>
+          <span class="tag tag-accent">ai/ml</span>
+        </div>
+      </div>
+      <div class="proj-name">Multimodal Inference Pipeline</div>
+      <div class="proj-type">// realtime edge ai preprocessing · The Plug Co</div>
+      <div class="proj-desc">Realtime image and audio preprocessing pipelines for AI inference at the edge. Structured logging, benchmarking, and validation until p99 latency hit 11ms. Zero guessing — every bottleneck identified and eliminated.</div>
+      <div class="proj-arch">
+        <span class="hl">[camera/audio_input]</span> <span class="arr">→</span>
+        <span class="hl">[preprocess()]</span> <span class="arr">→</span>
+        <span>[normalize()]</span> <span class="arr">→</span>
+        <span class="hl">[model.infer()]</span><br>
+        <span class="arr">↳ </span><span class="ok">[structured_log]</span>
+        <span class="arr"> + </span><span class="ok">[latency_tracker]</span>
+        <span class="arr"> + </span><span class="ok">[validation_layer]</span>
+      </div>
+      <div class="proj-metrics">
+        <div><div class="pm-val">11ms</div><div class="pm-label">p99 latency</div></div>
+        <div><div class="pm-val">PyTorch</div><div class="pm-label">framework</div></div>
+        <div><div class="pm-val">edge</div><div class="pm-label">deployment</div></div>
+      </div>
+    </div>
+
+    <div class="proj-card fu fu-3">
+      <div class="proj-head">
+        <div class="proj-id">SYS-002</div>
+        <div class="proj-tags">
+          <span class="tag tag-green">production</span>
+          <span class="tag">automation</span>
+        </div>
+      </div>
+      <div class="proj-name">Document Intelligence RAG</div>
+      <div class="proj-type">// ocr pipeline + retrieval-augmented generation · Outamation</div>
+      <div class="proj-desc">OCR-based data extraction pipeline feeding into a LlamaIndex RAG system. Handles 1,000+ documents and 10,000+ data points. Reduced manual review by 60%, improving data quality across scalable analytics workflows.</div>
+      <div class="proj-arch">
+        <span>[pdf/scans]</span> <span class="arr">→</span>
+        <span class="hl">[ocr_extract()]</span> <span class="arr">→</span>
+        <span class="hl">[LlamaIndex]</span> <span class="arr">→</span>
+        <span class="hl">[query_api]</span><br>
+        <span class="arr">↳ </span><span class="ok">[data_validation]</span>
+        <span class="arr"> + </span><span class="ok">[quality_checks]</span>
+      </div>
+      <div class="proj-metrics">
+        <div><div class="pm-val">60%</div><div class="pm-label">less review</div></div>
+        <div><div class="pm-val">10k+</div><div class="pm-label">data points</div></div>
+        <div><div class="pm-val">1k+</div><div class="pm-label">documents</div></div>
+      </div>
+    </div>
+
+    <div class="proj-card fu fu-3">
+      <div class="proj-head">
+        <div class="proj-id">SYS-003</div>
+        <div class="proj-tags">
+          <span class="tag tag-accent">project</span>
+          <span class="tag">observability</span>
+        </div>
+      </div>
+      <div class="proj-name">Predictive Model Monitor</div>
+      <div class="proj-type">// ml observability + drift detection · personal project</div>
+      <div class="proj-desc">Production-style model monitoring that tracks data drift, prediction stability, and inference latency in realtime. Built before most students know what ML observability means. Designed to look and feel like Grafana or Datadog — but for ML models.</div>
+      <div class="proj-arch">
+        <span class="hl">[model_output]</span> <span class="arr">→</span>
+        <span class="hl">[drift_detector]</span>
+        <span class="arr"> + </span><span class="hl">[latency_tracker]</span><br>
+        <span class="arr">↳ </span><span class="ok">[FastAPI]</span>
+        <span class="arr"> → </span><span class="ok">[SQL_store]</span>
+        <span class="arr"> → </span><span class="ok">[Streamlit_dashboard]</span>
+      </div>
+      <div class="proj-metrics">
+        <div><div class="pm-val">FastAPI</div><div class="pm-label">api layer</div></div>
+        <div><div class="pm-val">realtime</div><div class="pm-label">monitoring</div></div>
+        <div><div class="pm-val">SQL</div><div class="pm-label">persistence</div></div>
+      </div>
+    </div>
+
+    <div class="proj-card fu fu-4">
+      <div class="proj-head">
+        <div class="proj-id">SYS-004</div>
+        <div class="proj-tags">
+          <span class="tag tag-accent">project</span>
+          <span class="tag">full-stack</span>
+        </div>
+      </div>
+      <div class="proj-name">TrustChain AI Validation</div>
+      <div class="proj-type">// ai-powered financial document validation · personal project</div>
+      <div class="proj-desc">End-to-end receipt validation system with multi-model AI backend. Node.js + React frontend, MongoDB persistence, Google Gemini + TensorFlow validation pipeline. 85% accuracy on real-world receipts. Full architecture case study available.</div>
+      <div class="proj-arch">
+        <span class="hl">[React_UI]</span> <span class="arr">→</span>
+        <span class="hl">[Node.js_API]</span> <span class="arr">→</span>
+        <span>[Gemini + TF]</span><br>
+        <span class="arr">↳ </span><span class="ok">[validation_pipeline]</span>
+        <span class="arr"> → </span><span class="ok">[MongoDB]</span>
+      </div>
+      <div class="proj-metrics">
+        <div><div class="pm-val">85%</div><div class="pm-label">accuracy</div></div>
+        <div><div class="pm-val">Gemini</div><div class="pm-label">llm</div></div>
+        <div><div class="pm-val">full-stack</div><div class="pm-label">scope</div></div>
+      </div>
+    </div>
+
+    <div class="case-cta">
+      <div class="case-cta-text">
+        <strong>Deep-dive: TrustChain AI — Architecture Case Study</strong>
+        Full system design, validation pipeline, request flow diagrams, and engineering decisions.
+      </div>
+      <a href="casestudy.html" class="btn-primary">Read case study →</a>
+    </div>
+
+  </div>
+
+  <!-- Experience timeline -->
+  <div class="section-label fu fu-4">experience log</div>
+  <div class="timeline">
+
+    <div class="tl-date">
+      <div class="tl-date-m">May 2026</div>
+      <div class="tl-date-s">present</div>
+    </div>
+    <div class="tl-spine live"></div>
+    <div class="tl-body">
+      <div class="tl-org">Kyndryl</div>
+      <div class="tl-role">python developer intern · aws · backend automation · toronto</div>
+      <div class="tl-desc">Backend automation, AWS cloud migration, and scalable system integration supporting reliable production data workflows and performance optimization.</div>
+      <span class="tl-metric">AWS · backend automation · cloud migration</span>
+    </div>
+
+    <div class="tl-date">
+      <div class="tl-date-m">Mar 2026</div>
+      <div class="tl-date-s">present</div>
+    </div>
+    <div class="tl-spine live"></div>
+    <div class="tl-body">
+      <div class="tl-org">The Plug Co</div>
+      <div class="tl-role">ai & immersive systems engineer · pytorch · tensorflow · remote</div>
+      <div class="tl-desc">Realtime multimodal preprocessing pipelines for image and audio AI inference. Benchmarked and validated until p99 preprocessing latency hit 11ms at the edge.</div>
+      <span class="tl-metric">11ms p99 image preprocessing latency</span>
+    </div>
+
+    <div class="tl-date">
+      <div class="tl-date-m">Sep 2024</div>
+      <div class="tl-date-s">Apr 2026</div>
+    </div>
+    <div class="tl-spine"></div>
+    <div class="tl-body">
+      <div class="tl-org">Toronto Metropolitan University</div>
+      <div class="tl-role">program admin & operations lead · python · sql · apis · toronto</div>
+      <div class="tl-desc">Built Python automation using Google APIs and a WhatsApp bot, improving data accuracy by 95%, saving 12+ hours/month, and enabling reliable data-driven decision-making.</div>
+      <span class="tl-metric">95% accuracy · 12+ hrs/month saved</span>
+    </div>
+
+    <div class="tl-date">
+      <div class="tl-date-m">Jun 2025</div>
+      <div class="tl-date-s">Aug 2025</div>
+    </div>
+    <div class="tl-spine"></div>
+    <div class="tl-body">
+      <div class="tl-org">Kavodax</div>
+      <div class="tl-role">software intern · python · apis · docker · linux · oshawa</div>
+      <div class="tl-desc">Developed a blockchain engine and integrated banking/remittance APIs. Reduced onboarding time by 25% through testing, debugging, and robust error handling across production use cases.</div>
+      <span class="tl-metric">25% onboarding time reduction</span>
+    </div>
+
+    <div class="tl-date">
+      <div class="tl-date-m">May 2025</div>
+      <div class="tl-date-s">Jul 2025</div>
+    </div>
+    <div class="tl-spine"></div>
+    <div class="tl-body">
+      <div class="tl-org">Outamation</div>
+      <div class="tl-role">automation extern · python · sql · data processing · remote</div>
+      <div class="tl-desc">OCR-based data pipelines and RAG system (LlamaIndex) processing 1,000+ documents and 10,000+ data points. Improved data quality and reduced manual review by 60%.</div>
+      <span class="tl-metric">60% reduction in manual review</span>
+    </div>
+
+    <div class="tl-date">
+      <div class="tl-date-m">Mar 2025</div>
+      <div class="tl-date-s">May 2025</div>
+    </div>
+    <div class="tl-spine"></div>
+    <div class="tl-body">
+      <div class="tl-org">BigPod Limited</div>
+      <div class="tl-role">software engineer · backend & systems integration · london, on</div>
+      <div class="tl-desc">Integrated Node.js and FastAPI backends with asynchronous operations and caching, improving system performance, scalability, and maintainability for production-ready applications.</div>
+      <span class="tl-metric">async · caching · production backend</span>
+    </div>
+
+  </div>
+
+</div>
+</div>
+<script src="nav.js"></script>
+</body>
+</html>
