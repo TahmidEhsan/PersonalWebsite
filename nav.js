@@ -14,6 +14,9 @@
     `<a class="nav-link${p.id===currentPage?' active':''}" href="${p.href}">${p.label}</a>`
   ).join('');
 
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
   document.body.insertAdjacentHTML('afterbegin', `
     <nav id="site-nav">
       <a class="nav-brand" href="index.html">
@@ -24,6 +27,7 @@
       <div class="nav-right">
         <div class="nav-clock" id="nav-clock">00:00:00 UTC</div>
         <div class="nav-badge">available</div>
+        <button class="theme-toggle" id="theme-toggle">${savedTheme === 'light' ? '[dark]' : '[light]'}</button>
       </div>
     </nav>
   `);
@@ -50,4 +54,11 @@
     if(el) el.textContent = d.toUTCString().split(' ')[4] + ' UTC';
   }
   tick(); setInterval(tick, 1000);
+
+  document.getElementById('theme-toggle').addEventListener('click', function(){
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    this.textContent = next === 'light' ? '[dark]' : '[light]';
+  });
 })();
