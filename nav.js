@@ -26,8 +26,8 @@
       <div class="nav-links">${navLinks}</div>
       <div class="nav-right">
         <div class="nav-clock" id="nav-clock">00:00:00 UTC</div>
-        <div class="nav-badge">available</div>
         <button class="theme-toggle" id="theme-toggle">${savedTheme === 'light' ? '[dark]' : '[light]'}</button>
+        <div class="nav-badge">available</div>
       </div>
     </nav>
   `);
