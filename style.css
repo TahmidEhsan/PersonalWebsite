@@ -20,7 +20,7 @@ html { scroll-behavior: smooth; }
   --border-hi:   rgba(255,255,255,0.16);
   --text:        #eae8e3;
   --text-2:      #6a6a74;
-  --text-3:      #2e2e36;
+  --text-3:      #4a4a58;
   --accent:      #c9ba9b;
   --accent-dim:  rgba(201,186,155,0.08);
   --accent-glow: rgba(201,186,155,0.04);
@@ -44,7 +44,7 @@ html { scroll-behavior: smooth; }
   --border-hi:   rgba(0,0,0,0.20);
   --text:        #1c1a15;
   --text-2:      #5c5950;
-  --text-3:      #aaa69e;
+  --text-3:      #888480;
   --accent:      #7a6642;
   --accent-dim:  rgba(122,102,66,0.08);
   --accent-glow: rgba(122,102,66,0.04);
