@@ -26,7 +26,10 @@
       <div class="nav-links">${navLinks}</div>
       <div class="nav-right">
         <div class="nav-clock" id="nav-clock">00:00:00 UTC</div>
-        <button class="theme-toggle" id="theme-toggle">${savedTheme === 'light' ? '[dark]' : '[light]'}</button>
+        <label class="theme-toggle">
+          <input type="checkbox" id="theme-toggle" ${savedTheme === 'light' ? 'checked' : ''}>
+          <span class="toggle-track"><span class="toggle-knob"></span></span>
+        </label>
         <div class="nav-badge">available</div>
       </div>
     </nav>
@@ -48,17 +51,15 @@
     </footer>
   `);
 
-  function tick(){
-    const d = new Date();
+  const tick = () => {
     const el = document.getElementById('nav-clock');
-    if(el) el.textContent = d.toUTCString().split(' ')[4] + ' UTC';
-  }
+    if(el) el.textContent = new Date().toUTCString().split(' ')[4] + ' UTC';
+  };
   tick(); setInterval(tick, 1000);
 
-  document.getElementById('theme-toggle').addEventListener('click', function(){
-    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  document.getElementById('theme-toggle').addEventListener('change', function(){
+    const next = this.checked ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
-    this.textContent = next === 'light' ? '[dark]' : '[light]';
   });
 })();
