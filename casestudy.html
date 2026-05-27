@@ -76,12 +76,12 @@
     <div class="cs-tag-row">
       <span class="tag tag-accent">case study</span>
       <span class="tag tag-green">personal project</span>
-      <span class="tag">full-stack ai</span>
+      <span class="tag">async orchestration</span>
     </div>
     <div class="cs-title">TrustChain AI<br><span>Validation System</span></div>
     <div class="cs-subtitle">// ai-powered financial document validation · architecture deep-dive</div>
     <p class="cs-lede">
-      An end-to-end receipt validation system built with a production mindset. Multi-model AI pipeline, async Node.js backend, React frontend, MongoDB persistence. 85% validation accuracy on real-world financial documents. This documents the architecture decisions, challenges, and engineering tradeoffs made throughout.
+      An end-to-end receipt validation system designed around async orchestration and scalable validation workflows. Multi-model AI pipeline, async Node.js backend, React frontend, MongoDB persistence. ~85% validation agreement across manually reviewed receipt samples. This documents the architecture decisions, challenges, and engineering tradeoffs made throughout.
     </p>
   </div>
 
@@ -90,7 +90,7 @@
     <div class="metric-chip">
       <div class="metric-chip-val"><span class="hi">85</span>%</div>
       <div class="metric-chip-label">validation accuracy</div>
-      <div class="metric-chip-sub">real-world receipts</div>
+      <div class="metric-chip-sub">manually reviewed samples</div>
     </div>
     <div class="metric-chip">
       <div class="metric-chip-val" style="font-size:18px">Node+React</div>
@@ -106,6 +106,29 @@
       <div class="metric-chip-val" style="font-size:18px">MongoDB</div>
       <div class="metric-chip-label">persistence</div>
       <div class="metric-chip-sub">document store</div>
+    </div>
+  </div>
+
+  <!-- Architecture Evolution -->
+  <div class="cs-section fu fu-2">
+    <div class="section-label">architecture evolution</div>
+    <div class="cs-section-title">V1 → V2: how the design changed</div>
+    <div class="flow-steps" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="flow-step">
+        <div class="flow-step-n">V1 — INITIAL DESIGN</div>
+        <div class="flow-step-title">Synchronous Validation</div>
+        <div class="flow-step-desc">Single HTTP request through the full AI pipeline. Simple to implement. Gemini + TF inference took 3–8s per receipt — worked on single uploads, broke under concurrent load.</div>
+      </div>
+      <div class="flow-step" style="border-left: 2px solid var(--red)">
+        <div class="flow-step-n">WHAT BROKE</div>
+        <div class="flow-step-title">Timeout Failures</div>
+        <div class="flow-step-desc">Concurrent uploads exhausted HTTP workers. Requests queued behind AI processing. Frontend timed out with no recovery path. Inconsistent completion under realistic load conditions.</div>
+      </div>
+      <div class="flow-step" style="border-left: 2px solid var(--green)">
+        <div class="flow-step-n">V2 — CURRENT</div>
+        <div class="flow-step-title">Async Job Orchestration</div>
+        <div class="flow-step-desc">Upload returns job_id immediately. Validation runs in async worker. Frontend polls for completion. HTTP response decoupled from AI processing — stable regardless of inference duration.</div>
+      </div>
     </div>
   </div>
 
@@ -211,6 +234,34 @@
     </div>
   </div>
 
+  <!-- API Snippets -->
+  <div class="cs-section fu fu-3">
+    <div class="section-label">api payload examples</div>
+    <div class="cs-section-title">What the backend actually returns</div>
+    <div class="code-block">
+<span class="c"># POST /validate — upload receipt, get job_id immediately</span>
+<span class="o">{</span> <span class="n">"job_id"</span>: <span class="s">"job_1847"</span>, <span class="n">"status"</span>: <span class="s">"queued"</span>, <span class="n">"poll_url"</span>: <span class="s">"/jobs/job_1847"</span> <span class="o">}</span>
+
+<span class="c"># GET /jobs/:id — mid-processing</span>
+<span class="o">{</span>
+  <span class="n">"job_id"</span>: <span class="s">"job_1847"</span>,
+  <span class="n">"status"</span>: <span class="s">"processing"</span>,
+  <span class="n">"stage"</span>: <span class="s">"tf_classify"</span>,
+  <span class="n">"progress"</span>: <span class="fn">0.72</span>
+<span class="o">}</span>
+
+<span class="c"># GET /jobs/:id — on completion</span>
+<span class="o">{</span>
+  <span class="n">"job_id"</span>: <span class="s">"job_1847"</span>,
+  <span class="n">"status"</span>: <span class="s">"complete"</span>,
+  <span class="n">"valid"</span>: <span class="k">true</span>,
+  <span class="n">"score"</span>: <span class="fn">0.91</span>,
+  <span class="n">"extracted"</span>: <span class="o">{ <span class="n">"vendor"</span>: <span class="s">"Shoppers Drug Mart"</span>, <span class="n">"total"</span>: <span class="fn">24.99</span>, <span class="n">"date"</span>: <span class="s">"2026-05-12"</span> }</span>,
+  <span class="n">"flags"</span>: <span class="o">[]</span>
+<span class="o">}</span>
+    </div>
+  </div>
+
   <!-- Key code -->
   <div class="cs-section fu fu-3">
     <div class="section-label">validation pipeline core</div>
@@ -223,7 +274,7 @@
 
     <span class="c"># Stage 2: classify against fraud patterns</span>
     confidence, flags = <span class="fn">tf_classify</span>(extracted)
-    <span class="c"># model trained on 50k+ labelled receipts</span>
+    <span class="c"># trained on real-world receipt samples</span>
 
     <span class="c"># Stage 3: business rule validation</span>
     rule_result = <span class="fn">validate_rules</span>(extracted)
@@ -238,6 +289,74 @@
     </div>
   </div>
 
+  <!-- Observability Log -->
+  <div class="cs-section fu fu-3">
+    <div class="section-label">pipeline execution log</div>
+    <div class="cs-section-title">What observability looks like in practice</div>
+    <div class="code-block">
+<span class="c"># structured log output — single validation job</span>
+<span class="o">[2026-05-12T14:33:01Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=queued</span>
+<span class="o">[2026-05-12T14:33:01Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=worker_pickup</span>          <span class="fn">queue_wait=43ms</span>
+<span class="o">[2026-05-12T14:33:02Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=preprocess_start</span>
+<span class="o">[2026-05-12T14:33:02Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=preprocess_complete</span>    <span class="fn">duration=94ms</span>
+<span class="o">[2026-05-12T14:33:02Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=gemini_start</span>
+<span class="o">[2026-05-12T14:33:04Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=gemini_complete</span>        <span class="fn">duration=1842ms</span>  <span class="s">fields=6</span>
+<span class="o">[2026-05-12T14:33:04Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=tf_classify_start</span>
+<span class="o">[2026-05-12T14:33:04Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=tf_classify_complete</span>   <span class="fn">duration=312ms</span>   <span class="s">score=0.91</span>
+<span class="o">[2026-05-12T14:33:04Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=rule_check_complete</span>    <span class="s">passed=true</span>
+<span class="o">[2026-05-12T14:33:04Z]</span>  <span class="n">job_id=job_1847</span>  <span class="k">event=result_written</span>         <span class="fn">total=2291ms</span>     <span class="s">valid=true</span>
+    </div>
+  </div>
+
+  <!-- Tradeoffs -->
+  <div class="cs-section fu fu-4">
+    <div class="section-label">architecture tradeoffs</div>
+    <div class="cs-section-title">Design decisions and why</div>
+    <div class="challenges">
+      <div class="challenge">
+        <div class="ch-problem">decision</div>
+        <div class="ch-title">Polling vs. WebSockets for result delivery</div>
+        <div class="ch-solution">Chose HTTP polling (every 2s) over WebSockets. For a low-concurrency validation tool, maintaining persistent connections adds infrastructure complexity without meaningful UX benefit. Polling is simpler to implement, debug, and scale independently from the validation backend.</div>
+        <div class="ch-outcome">↳ Trade-off: minor result latency vs. operational simplicity — acceptable at this scale</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">decision</div>
+        <div class="ch-title">MongoDB vs. Postgres for document persistence</div>
+        <div class="ch-solution">Chose MongoDB because the validation result schema evolved during development — flexible document storage avoided migrations while the data shape was still changing. Postgres would be preferable for a stable schema with relational queries, but schema iteration speed during prototyping made MongoDB the better fit.</div>
+        <div class="ch-outcome">↳ Trade-off: schema flexibility over relational guarantees — schema versioning used to mitigate</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">decision</div>
+        <div class="ch-title">Gemini extraction before TF classification</div>
+        <div class="ch-solution">Gemini runs first to extract structured data (vendor, date, totals, line items) from the raw image. The TF classifier then operates on structured JSON fields rather than raw pixels — a smaller, faster model running on typed data reduces inference cost and makes flagged anomalies easier to reason about.</div>
+        <div class="ch-outcome">↳ Result: clean stage separation, structured intermediate representation, faster classification</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Constraints -->
+  <div class="cs-section fu fu-4">
+    <div class="section-label">constraints faced</div>
+    <div class="cs-section-title">What the system had to work around</div>
+    <div class="challenges">
+      <div class="challenge">
+        <div class="ch-problem">constraint</div>
+        <div class="ch-title">Gemini API latency variability</div>
+        <div class="ch-solution">Extraction time ranged from ~800ms to 6s depending on image complexity, OCR difficulty, and server load. This variance made synchronous HTTP completely impractical and was the direct driver of the async architecture decision.</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">constraint</div>
+        <div class="ch-title">No labeled dataset — manual validation agreement</div>
+        <div class="ch-solution">The ~85% figure represents agreement measured against manually reviewed receipt samples, not a pre-labeled benchmark. Limited data and no ground-truth labeling pipeline meant the metric reflects observed consistency under real-world conditions, not academic benchmark performance.</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">constraint</div>
+        <div class="ch-title">Local compute — no distributed inference</div>
+        <div class="ch-solution">The inference service ran locally throughout development. Concurrent upload testing was limited by available compute. Current design optimized for correctness and architecture clarity; worker scaling and queue persistence are next-iteration problems.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Challenges -->
   <div class="cs-section fu fu-4">
     <div class="section-label">engineering challenges</div>
@@ -245,21 +364,105 @@
     <div class="challenges">
       <div class="challenge">
         <div class="ch-problem">problem</div>
-        <div class="ch-title">Gemini + TF inference latency blocking HTTP responses</div>
+        <div class="ch-title">AI extraction and validation pipeline exceeding synchronous request limits</div>
         <div class="ch-solution">Combined AI pipeline took 3–8 seconds per receipt. Synchronous HTTP would exceed client timeouts and create poor UX. Solution: async job queue — Node.js returns job_id immediately, React polls for completion, backend processes at its own pace.</div>
         <div class="ch-outcome">↳ HTTP response time: &lt;100ms. AI pipeline: runs async, no timeout risk.</div>
       </div>
       <div class="challenge">
         <div class="ch-problem">problem</div>
         <div class="ch-title">Receipt image quality variance degrading OCR accuracy</div>
-        <div class="ch-solution">Receipts vary wildly: thermal paper, photos, scans, low contrast. Implemented a preprocessing step before Gemini — contrast normalisation, deskew, and resolution upscale — which moved baseline accuracy from ~62% to 85%.</div>
-        <div class="ch-outcome">↳ Accuracy: 62% → 85% after preprocessing layer addition.</div>
+        <div class="ch-solution">Receipts vary wildly: thermal paper, photos, scans, low contrast. Implemented a preprocessing step before Gemini — contrast normalisation, deskew, and resolution upscale — which improved OCR reliability and moved baseline agreement from ~62% to ~85%.</div>
+        <div class="ch-outcome">↳ Validation agreement: ~62% → ~85% after preprocessing layer addition.</div>
       </div>
       <div class="challenge">
         <div class="ch-problem">problem</div>
         <div class="ch-title">MongoDB document schema evolving mid-development</div>
         <div class="ch-solution">Validation result schema changed twice during development. Used explicit version fields on every MongoDB document and wrote a migration function run on startup — zero downtime schema evolution without breaking existing stored results.</div>
         <div class="ch-outcome">↳ Zero data loss across 3 schema versions. Backward-compatible reads.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Deployment + Edge Cases -->
+  <div class="cs-section fu fu-4">
+    <div class="section-label">deployment layout &amp; edge cases</div>
+    <div class="cs-section-title">How it runs and what it handles</div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-n">DEPLOYMENT</div>
+        <div class="flow-step-title">Service breakdown</div>
+        <div class="flow-step-desc">
+          <code style="font-family:var(--mono);font-size:10px;color:var(--text-2);line-height:1.9;display:block">
+            /frontend&nbsp;&nbsp;&nbsp;→ React UI<br>
+            /api&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ Node.js orchestration<br>
+            /inference&nbsp;→ Python validation service<br>
+            /workers&nbsp;&nbsp;&nbsp;→ async job processors<br>
+            docker-compose.yml
+          </code>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">EDGE CASES HANDLED</div>
+        <div class="flow-step-title">What the system accounts for</div>
+        <div class="flow-step-desc">corrupt or unsupported upload formats · duplicate receipt submissions · malformed Gemini extraction output · missing vendor or total fields · TTL-based cleanup of raw upload files · schema version mismatch on stored results</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next Iteration -->
+  <div class="cs-section fu fu-4">
+    <div class="section-label">next iteration</div>
+    <div class="cs-section-title">What I'd change at the next scale</div>
+    <div class="cs-body">
+      <p>Current design handles low-volume async orchestration well. Scaling to real production concurrency would require a different set of decisions.</p>
+    </div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-n">INFRASTRUCTURE</div>
+        <div class="flow-step-title">Redis-backed persistent queue</div>
+        <div class="flow-step-desc">Replace in-memory queue with Redis. Survives restarts, enables distributed workers, supports back-pressure handling and queue depth monitoring natively.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">OBSERVABILITY</div>
+        <div class="flow-step-title">Distributed tracing via OpenTelemetry</div>
+        <div class="flow-step-desc">Add spans across the pipeline boundary. Currently structured logging is per-service — not traceable end-to-end across the Node.js → Python worker boundary.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">FRONTEND</div>
+        <div class="flow-step-title">WebSocket result streaming</div>
+        <div class="flow-step-desc">Replace polling with WebSocket push. Current 2s polling adds unnecessary latency and creates chatty HTTP load. WebSockets would enable real-time stage progress updates.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-n">SCALING</div>
+        <div class="flow-step-title">Worker autoscaling on queue depth</div>
+        <div class="flow-step-desc">Containerize the inference service and scale workers based on queue depth. Current single-worker model creates a throughput bottleneck under concurrent upload load.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What I Learned -->
+  <div class="cs-section fu fu-4">
+    <div class="section-label">what I learned</div>
+    <div class="cs-section-title">Technical reflection</div>
+    <div class="challenges">
+      <div class="challenge">
+        <div class="ch-problem">lesson</div>
+        <div class="ch-title">Async systems require lifecycle visibility from the start</div>
+        <div class="ch-solution">Moving to async workers made job state invisible by default. Adding explicit states (queued → processing → complete → failed) and structured logging was necessary before the system was debuggable, not after. Observability infrastructure belongs in v1.</div>
+        <div class="ch-outcome">↳ Build the instrumentation before you need to debug it</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">lesson</div>
+        <div class="ch-title">Preprocessing quality drives accuracy more than model choice</div>
+        <div class="ch-solution">Adjusting Gemini model parameters moved accuracy by ~3%. Adding the preprocessing normalization layer moved it by ~23%. Input quality was the dominant variable throughout — the model was not the bottleneck.</div>
+        <div class="ch-outcome">↳ Fix the data pipeline before tuning the model</div>
+      </div>
+      <div class="challenge">
+        <div class="ch-problem">lesson</div>
+        <div class="ch-title">Schema versioning is not optional</div>
+        <div class="ch-solution">The validation result document schema changed twice mid-development. Without explicit version fields on each MongoDB document, old stored results would have been unreadable. Retrofitting versioning mid-project was painful; building it first would have been free.</div>
+        <div class="ch-outcome">↳ Version every persisted document shape from the beginning</div>
       </div>
     </div>
   </div>

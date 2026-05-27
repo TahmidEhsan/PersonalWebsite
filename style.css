@@ -19,8 +19,8 @@ html { scroll-behavior: smooth; }
   --border-md:   rgba(255,255,255,0.10);
   --border-hi:   rgba(255,255,255,0.16);
   --text:        #eae8e3;
-  --text-2:      #6a6a74;
-  --text-3:      #4a4a58;
+  --text-2:      #8d8d97;
+  --text-3:      #6d6d7b;
   --accent:      #c9ba9b;
   --accent-dim:  rgba(201,186,155,0.08);
   --accent-glow: rgba(201,186,155,0.04);
@@ -59,7 +59,7 @@ body {
   color: var(--text);
   font-family: var(--sans);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 

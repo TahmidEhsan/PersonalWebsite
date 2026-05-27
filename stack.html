@@ -21,11 +21,14 @@
 .skill-cat-name { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; }
 .skill-rows { display: flex; flex-direction: column; gap: 10px; }
 .skill-row { display: flex; align-items: center; gap: 12px; }
-.skill-name { font-size: 12px; color: var(--text-2); width: 110px; flex-shrink: 0; }
-.skill-bar { flex: 1; height: 2px; background: var(--border); position: relative; }
-.skill-fill { height: 100%; background: var(--accent); position: absolute; left: 0; transition: width 1s cubic-bezier(.4,0,.2,1); }
-.skill-fill.dim { background: var(--text-3); }
-.skill-pct { font-family: var(--mono); font-size: 10px; color: var(--text-3); width: 32px; text-align: right; flex-shrink: 0; }
+.skill-name { font-size: 12px; color: var(--text-2); flex: 1; }
+.skill-tier {
+  font-family: var(--mono); font-size: 9px; letter-spacing: .08em;
+  padding: 2px 8px; border: 0.5px solid; flex-shrink: 0;
+}
+.tier-primary { color: var(--accent); border-color: rgba(201,186,155,.25); }
+.tier-working { color: var(--text-2); border-color: var(--border-md); }
+.tier-familiar { color: var(--text-3); border-color: var(--border); }
 
 /* Aside */
 .aside-section { margin-bottom: 28px; }
@@ -86,7 +89,7 @@
     </div>
     <div class="theme-cell">
       <div class="theme-cell-icon">[03]</div>
-      <div class="theme-cell-title">Cloud &amp; DevOps</div>
+      <div class="theme-cell-title">Cloud &amp; Infrastructure</div>
       <div class="theme-cell-items">AWS (S3, EC2) · Docker · CI/CD · Linux · automation workflows · cloud migration · environment management</div>
     </div>
     <div class="theme-cell">
@@ -97,44 +100,44 @@
   </div>
 
   <!-- Main proficiency + aside -->
-  <div class="section-label fu fu-2">proficiency depth</div>
+  <div class="section-label fu fu-2">engineering toolkit</div>
   <div class="stack-layout fu fu-3">
     <div class="stack-main">
 
       <div class="skill-cat">
         <div class="skill-cat-name">core languages</div>
         <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">Python</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="93"></div></div><div class="skill-pct">93</div></div>
-          <div class="skill-row"><div class="skill-name">JavaScript</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="72"></div></div><div class="skill-pct">72</div></div>
-          <div class="skill-row"><div class="skill-name">SQL</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="78"></div></div><div class="skill-pct">78</div></div>
-          <div class="skill-row"><div class="skill-name">Java</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="60"></div></div><div class="skill-pct">60</div></div>
+          <div class="skill-row"><div class="skill-name">Python</div><div class="skill-tier tier-primary">primary</div></div>
+          <div class="skill-row"><div class="skill-name">JavaScript</div><div class="skill-tier tier-working">working</div></div>
+          <div class="skill-row"><div class="skill-name">SQL</div><div class="skill-tier tier-working">working</div></div>
+          <div class="skill-row"><div class="skill-name">Java</div><div class="skill-tier tier-familiar">familiar</div></div>
         </div>
       </div>
 
       <div class="skill-cat">
-        <div class="skill-cat-name">ai / ml</div>
+        <div class="skill-cat-name">ai inference &amp; orchestration</div>
         <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">PyTorch</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="82"></div></div><div class="skill-pct">82</div></div>
-          <div class="skill-row"><div class="skill-name">TensorFlow</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="74"></div></div><div class="skill-pct">74</div></div>
-          <div class="skill-row"><div class="skill-name">LlamaIndex</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="70"></div></div><div class="skill-pct">70</div></div>
+          <div class="skill-row"><div class="skill-name">PyTorch</div><div class="skill-tier tier-primary">primary</div></div>
+          <div class="skill-row"><div class="skill-name">TensorFlow</div><div class="skill-tier tier-working">working</div></div>
+          <div class="skill-row"><div class="skill-name">LlamaIndex</div><div class="skill-tier tier-working">working</div></div>
         </div>
       </div>
 
       <div class="skill-cat">
-        <div class="skill-cat-name">backend frameworks</div>
+        <div class="skill-cat-name">backend &amp; interface layer</div>
         <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">FastAPI</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="86"></div></div><div class="skill-pct">86</div></div>
-          <div class="skill-row"><div class="skill-name">Node.js</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="70"></div></div><div class="skill-pct">70</div></div>
-          <div class="skill-row"><div class="skill-name">React</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="62"></div></div><div class="skill-pct">62</div></div>
+          <div class="skill-row"><div class="skill-name">FastAPI</div><div class="skill-tier tier-primary">primary</div></div>
+          <div class="skill-row"><div class="skill-name">Node.js</div><div class="skill-tier tier-working">working</div></div>
+          <div class="skill-row"><div class="skill-name">React</div><div class="skill-tier tier-familiar">familiar</div></div>
         </div>
       </div>
 
       <div class="skill-cat">
         <div class="skill-cat-name">cloud &amp; infra</div>
         <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">AWS</div><div class="skill-bar"><div class="skill-fill" style="width:0%" data-w="68"></div></div><div class="skill-pct">68</div></div>
-          <div class="skill-row"><div class="skill-name">Docker</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="72"></div></div><div class="skill-pct">72</div></div>
-          <div class="skill-row"><div class="skill-name">Linux</div><div class="skill-bar"><div class="skill-fill dim" style="width:0%" data-w="75"></div></div><div class="skill-pct">75</div></div>
+          <div class="skill-row"><div class="skill-name">AWS</div><div class="skill-tier tier-working">working</div></div>
+          <div class="skill-row"><div class="skill-name">Docker</div><div class="skill-tier tier-working">working</div></div>
+          <div class="skill-row"><div class="skill-name">Linux</div><div class="skill-tier tier-working">working</div></div>
         </div>
       </div>
 
@@ -150,6 +153,27 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [instrument + observe]<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [measure, not guess]<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ [ship with confidence]
+        </div>
+      </div>
+
+      <div class="aside-section">
+        <div class="aside-label">current rabbit holes</div>
+        <div class="now-items">
+          <div class="now-item">
+            <div class="now-item-label">exploring</div>
+            <div class="now-item-main">distributed tracing patterns</div>
+            <div class="now-item-sub">OpenTelemetry · trace propagation</div>
+          </div>
+          <div class="now-item">
+            <div class="now-item-label">thinking about</div>
+            <div class="now-item-main">ECS vs Kubernetes tradeoffs</div>
+            <div class="now-item-sub">at small-team scale</div>
+          </div>
+          <div class="now-item">
+            <div class="now-item-label">debugging recently</div>
+            <div class="now-item-main">async retry edge cases</div>
+            <div class="now-item-sub">queue durability · OCR failure paths</div>
+          </div>
         </div>
       </div>
 
@@ -192,6 +216,31 @@
     </div>
   </div>
 
+  <!-- Systems Philosophy -->
+  <div class="section-label fu fu-4">systems philosophy</div>
+  <div class="theme-grid fu fu-4" style="margin-bottom:48px">
+    <div class="theme-cell">
+      <div class="theme-cell-icon">//</div>
+      <div class="theme-cell-title">Reliability over hype</div>
+      <div class="theme-cell-items">A system that works predictably is worth more than one that's technically impressive but fragile under real conditions.</div>
+    </div>
+    <div class="theme-cell">
+      <div class="theme-cell-icon">//</div>
+      <div class="theme-cell-title">Measure before optimizing</div>
+      <div class="theme-cell-items">Benchmarks first, changes second. Guessing at bottlenecks wastes time; structured logging and profiling find them.</div>
+    </div>
+    <div class="theme-cell">
+      <div class="theme-cell-icon">//</div>
+      <div class="theme-cell-title">Async where latency is unpredictable</div>
+      <div class="theme-cell-items">When a dependency can take 100ms or 8s, decouple the request lifecycle from processing. Synchronous design breaks at the tail.</div>
+    </div>
+    <div class="theme-cell">
+      <div class="theme-cell-icon">//</div>
+      <div class="theme-cell-title">Visibility before scaling</div>
+      <div class="theme-cell-items">You can't scale what you can't observe. Instrumentation and structured logs belong in v1, not as a later addition when things go wrong.</div>
+    </div>
+  </div>
+
   <!-- Engineering concepts -->
   <div class="section-label fu fu-4">engineering concepts</div>
   <div class="concepts-wrap fu fu-4">
@@ -220,13 +269,5 @@
 </div>
 </div>
 <script src="nav.js"></script>
-<script>
-/* animate skill bars on load */
-setTimeout(() => {
-  document.querySelectorAll('.skill-fill').forEach(el => {
-    el.style.width = el.dataset.w + '%';
-  });
-}, 200);
-</script>
 </body>
 </html>
