@@ -25,7 +25,7 @@
       </a>
       <div class="nav-links">${navLinks}</div>
       <div class="nav-right">
-        <div class="nav-clock" id="nav-clock">00:00:00 EST</div>
+        <div class="nav-clock" id="nav-clock">00:00:00</div>
         <label class="theme-toggle">
           <input type="checkbox" id="theme-toggle" ${savedTheme === 'light' ? 'checked' : ''}>
           <span class="toggle-track"><span class="toggle-knob"></span></span>
@@ -54,8 +54,7 @@
   const tick = () => {
     const el = document.getElementById('nav-clock');
     if(el) {
-      const t = new Date().toLocaleTimeString('en-GB', { timeZone: 'America/Toronto', hour12: false });
-      el.textContent = t + ' EST';
+      el.textContent = new Date().toLocaleTimeString('en-GB', { timeZone: 'America/Toronto', hour12: false });
     }
   };
   tick(); setInterval(tick, 1000);
