@@ -111,7 +111,9 @@ body {
   font-family: var(--mono); font-size: 10px; color: var(--green);
   border: 0.5px solid rgba(74,170,106,.22);
   padding: 3px 10px; letter-spacing: .08em;
+  text-decoration: none; transition: border-color .15s, color .15s;
 }
+.nav-badge:hover { border-color: var(--green); }
 
 /* ── Footer ── */
 #site-footer {

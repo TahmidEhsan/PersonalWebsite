@@ -30,7 +30,7 @@
           <input type="checkbox" id="theme-toggle" ${savedTheme === 'light' ? 'checked' : ''}>
           <span class="toggle-track"><span class="toggle-knob"></span></span>
         </label>
-        <div class="nav-badge">available</div>
+        <a class="nav-badge" href="contact.html">available</a>
       </div>
     </nav>
   `);
