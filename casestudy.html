@@ -137,7 +137,7 @@
       <div class="flow-step">
         <div class="flow-step-n">V1 — INITIAL DESIGN</div>
         <div class="flow-step-title">Synchronous Validation</div>
-        <div class="flow-step-desc">Single HTTP request through the full AI pipeline. Simple to implement. Gemini + TF inference took 3–8s per receipt — worked on single uploads, broke under concurrent load.</div>
+        <div class="flow-step-desc">Single HTTP request through the full AI pipeline. Simple to implement. Gemini + TF inference took 3–8s per receipt. Worked on single uploads, broke under concurrent load.</div>
       </div>
       <div class="flow-step" style="border-left: 2px solid var(--red)">
         <div class="flow-step-n">WHAT BROKE</div>
@@ -147,7 +147,7 @@
       <div class="flow-step" style="border-left: 2px solid var(--green)">
         <div class="flow-step-n">V2 — CURRENT</div>
         <div class="flow-step-title">Async Job Orchestration</div>
-        <div class="flow-step-desc">Upload returns job_id immediately. Validation runs in async worker. Frontend polls for completion. HTTP response decoupled from AI processing — stable regardless of inference duration.</div>
+        <div class="flow-step-desc">Upload returns job_id immediately. Validation runs in async worker. Frontend polls for completion. HTTP response decoupled from AI processing, stable regardless of inference duration.</div>
       </div>
     </div>
   </div>
@@ -158,7 +158,7 @@
     <div class="cs-section-title">How the system is structured</div>
     <div class="cs-body">
       <p>The system separates concerns across three distinct layers: a React frontend for document capture and results display, a Node.js API layer handling routing, session management, and async job orchestration, and a Python validation backend that runs the Gemini + TensorFlow pipeline.</p>
-      <p>The key architectural decision was treating validation as an <strong>async job</strong> rather than a synchronous request. Long-running AI inference would time out in a synchronous HTTP model — the queue-based approach lets the frontend poll for results while the backend processes at its own pace.</p>
+      <p>The key architectural decision was treating validation as an <strong>async job</strong> rather than a synchronous request. Long-running AI inference would time out in a synchronous HTTP model, so the queue-based approach lets the frontend poll for results while the backend processes at its own pace.</p>
     </div>
     <div class="arch-full">
       <div class="arch-tier">
@@ -337,18 +337,18 @@
         <div class="ch-problem">decision</div>
         <div class="ch-title">Polling vs. WebSockets for result delivery</div>
         <div class="ch-solution">Chose HTTP polling (every 2s) over WebSockets. For a low-concurrency validation tool, maintaining persistent connections adds infrastructure complexity without meaningful UX benefit. Polling is simpler to implement, debug, and scale independently from the validation backend.</div>
-        <div class="ch-outcome">↳ Trade-off: minor result latency vs. operational simplicity — acceptable at this scale</div>
+        <div class="ch-outcome">↳ Trade-off: minor result latency vs. operational simplicity, acceptable at this scale</div>
       </div>
       <div class="challenge">
         <div class="ch-problem">decision</div>
         <div class="ch-title">MongoDB vs. Postgres for document persistence</div>
-        <div class="ch-solution">Chose MongoDB because the validation result schema evolved during development — flexible document storage avoided migrations while the data shape was still changing. Postgres would be preferable for a stable schema with relational queries, but schema iteration speed during prototyping made MongoDB the better fit.</div>
-        <div class="ch-outcome">↳ Trade-off: schema flexibility over relational guarantees — schema versioning used to mitigate</div>
+        <div class="ch-solution">Chose MongoDB because the validation result schema evolved during development; flexible document storage avoided migrations while the data shape was still changing. Postgres would be preferable for a stable schema with relational queries, but schema iteration speed during prototyping made MongoDB the better fit.</div>
+        <div class="ch-outcome">↳ Trade-off: schema flexibility over relational guarantees, with schema versioning used to mitigate</div>
       </div>
       <div class="challenge">
         <div class="ch-problem">decision</div>
         <div class="ch-title">Gemini extraction before TF classification</div>
-        <div class="ch-solution">Gemini runs first to extract structured data (vendor, date, totals, line items) from the raw image. The TF classifier then operates on structured JSON fields rather than raw pixels — a smaller, faster model running on typed data reduces inference cost and makes flagged anomalies easier to reason about.</div>
+        <div class="ch-solution">Gemini runs first to extract structured data (vendor, date, totals, line items) from the raw image. The TF classifier then operates on structured JSON fields rather than raw pixels. A smaller, faster model running on typed data reduces inference cost and makes flagged anomalies easier to reason about.</div>
         <div class="ch-outcome">↳ Result: clean stage separation, structured intermediate representation, faster classification</div>
       </div>
     </div>
@@ -385,19 +385,19 @@
       <div class="challenge">
         <div class="ch-problem">problem</div>
         <div class="ch-title">AI extraction and validation pipeline exceeding synchronous request limits</div>
-        <div class="ch-solution">Combined AI pipeline took 3–8 seconds per receipt. Synchronous HTTP would exceed client timeouts and create poor UX. Solution: async job queue — Node.js returns job_id immediately, React polls for completion, backend processes at its own pace.</div>
+        <div class="ch-solution">Combined AI pipeline took 3–8 seconds per receipt. Synchronous HTTP would exceed client timeouts and create poor UX. Solution: async job queue. Node.js returns job_id immediately, React polls for completion, backend processes at its own pace.</div>
         <div class="ch-outcome">↳ HTTP response time: &lt;100ms. AI pipeline: runs async, no timeout risk.</div>
       </div>
       <div class="challenge">
         <div class="ch-problem">problem</div>
         <div class="ch-title">Receipt image quality variance degrading OCR accuracy</div>
-        <div class="ch-solution">Receipts vary wildly: thermal paper, photos, scans, low contrast. Implemented a preprocessing step before Gemini — contrast normalisation, deskew, and resolution upscale — which improved OCR reliability and moved baseline agreement from ~62% to ~85%.</div>
+        <div class="ch-solution">Receipts vary wildly: thermal paper, photos, scans, low contrast. Implemented a preprocessing step before Gemini (contrast normalisation, deskew, and resolution upscale) which improved OCR reliability and moved baseline agreement from ~62% to ~85%.</div>
         <div class="ch-outcome">↳ Validation agreement: ~62% → ~85% after preprocessing layer addition.</div>
       </div>
       <div class="challenge">
         <div class="ch-problem">problem</div>
         <div class="ch-title">MongoDB document schema evolving mid-development</div>
-        <div class="ch-solution">Validation result schema changed twice during development. Used explicit version fields on every MongoDB document and wrote a migration function run on startup — zero downtime schema evolution without breaking existing stored results.</div>
+        <div class="ch-solution">Validation result schema changed twice during development. Used explicit version fields on every MongoDB document and wrote a migration function run on startup for zero-downtime schema evolution without breaking existing stored results.</div>
         <div class="ch-outcome">↳ Zero data loss across 3 schema versions. Backward-compatible reads.</div>
       </div>
     </div>
@@ -446,7 +446,7 @@
       <div class="flow-step">
         <div class="flow-step-n">OBSERVABILITY</div>
         <div class="flow-step-title">Distributed tracing via OpenTelemetry</div>
-        <div class="flow-step-desc">Add spans across the pipeline boundary. Currently structured logging is per-service — not traceable end-to-end across the Node.js → Python worker boundary.</div>
+        <div class="flow-step-desc">Add spans across the pipeline boundary. Currently structured logging is per-service, not traceable end-to-end across the Node.js → Python worker boundary.</div>
       </div>
       <div class="flow-step">
         <div class="flow-step-n">FRONTEND</div>
@@ -475,7 +475,7 @@
       <div class="challenge">
         <div class="ch-problem">lesson</div>
         <div class="ch-title">Preprocessing quality drives accuracy more than model choice</div>
-        <div class="ch-solution">Adjusting Gemini model parameters moved accuracy by ~3%. Adding the preprocessing normalization layer moved it by ~23%. Input quality was the dominant variable throughout — the model was not the bottleneck.</div>
+        <div class="ch-solution">Adjusting Gemini model parameters moved accuracy by ~3%. Adding the preprocessing normalization layer moved it by ~23%. Input quality was the dominant variable throughout; the model was not the bottleneck.</div>
         <div class="ch-outcome">↳ Fix the data pipeline before tuning the model</div>
       </div>
       <div class="challenge">
