@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Case Study: TrustChain AI @ Tahmid.Dev</title>
+<title>Case Study: TrustChain AI @ tahmidehsan.dev</title>
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <link rel="stylesheet" href="style.css">
 <style>
@@ -66,6 +66,25 @@
 .ch-title { font-size: 13px; color: var(--text); font-weight: 500; margin-bottom: 5px; }
 .ch-solution { font-size: 12px; color: var(--text-2); line-height: 1.65; }
 .ch-outcome { font-family: var(--mono); font-size: 10px; color: var(--green); margin-top: 6px; letter-spacing: .04em; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .page-inner { padding: 40px 28px 60px; }
+  .cs-title { font-size: 36px; }
+  .cs-metrics { grid-template-columns: 1fr 1fr; }
+  .flow-steps { grid-template-columns: 1fr; }
+  .arch-full { padding: 20px 18px; }
+  .arch-tier-divider { margin: 0 -18px; margin-bottom: 16px; }
+}
+@media (max-width: 640px) {
+  .page-inner { padding: 28px 16px 48px; }
+  .cs-title { font-size: 28px; }
+  .cs-lede { font-size: 13px; }
+  .cs-metrics { grid-template-columns: 1fr 1fr; }
+  .arch-full { padding: 16px 14px; overflow-x: auto; }
+  .arch-tier-divider { margin: 0 -14px; margin-bottom: 14px; }
+  .code-block { font-size: 10px; }
+}
 </style>
 </head>
 <body>

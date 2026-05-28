@@ -21,7 +21,7 @@
     <nav id="site-nav">
       <a class="nav-brand" href="index.html">
         <div class="nav-brand-dot"></div>
-        TAHMID.DEV
+        TAHMIDEHSAN.DEV
       </a>
       <div class="nav-links">${navLinks}</div>
       <div class="nav-right">

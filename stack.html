@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stack @ Tahmid.Dev</title>
+<title>Stack @ tahmidehsan.dev</title>
 <link rel="icon" type="image/png" href="favicon.png?v=3">
 <link rel="stylesheet" href="style.css">
 <style>
@@ -63,6 +63,22 @@
   transition: border-color .15s, color .15s;
 }
 .concept-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .page-inner { padding: 40px 28px 60px; }
+  .stack-layout { grid-template-columns: 1fr; }
+  .stack-aside { border-left: none; border-top: 0.5px solid var(--border); padding: 28px 28px; }
+  .theme-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .page-inner { padding: 28px 16px 48px; }
+  .page-title { font-size: 32px; }
+  .theme-grid { grid-template-columns: 1fr 1fr; }
+  .skill-cat { padding: 18px 16px; }
+  .stack-aside { padding: 24px 16px; }
+  .skill-row { flex-wrap: wrap; gap: 6px; }
+}
 </style>
 </head>
 <body>
@@ -72,7 +88,7 @@
   <div class="fu fu-1" style="margin-bottom:44px">
     <div class="eyebrow">04 / stack</div>
     <div class="page-title">Technical ecosystem</div>
-    <div class="page-sub">Organized by engineering identity, not by language alphabetically. The tools I reach for and why.</div>
+    <div class="page-sub">Organized by engineering identity, not by language alphabetically — the tools I reach for and why.</div>
   </div>
 
   <!-- Theme categories -->
