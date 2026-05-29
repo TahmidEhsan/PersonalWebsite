@@ -111,10 +111,23 @@
 .strip-label { font-family: var(--mono); font-size: 9px; color: var(--text-3); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 3px; }
 .strip-val { font-size: 11px; color: var(--text-2); }
 
-/* Themes row */
+/* Themes row / conveyor */
 .themes-row {
-  display: flex; flex-wrap: wrap; gap: 5px;
   padding: 16px 40px; border-top: 0.5px solid var(--border);
+}
+.themes-conveyor-track {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+  mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+}
+.themes-conveyor-belt {
+  display: flex; gap: 6px; width: max-content;
+  animation: themes-conveyor 28s linear infinite;
+}
+.themes-conveyor-belt:hover { animation-play-state: paused; }
+@keyframes themes-conveyor {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* ── Responsive ── */
@@ -124,6 +137,10 @@
   .hero-r-top { padding: 32px 24px; }
   .hero-name { font-size: 56px; }
   .themes-row { padding: 12px 24px; }
+  .themes-conveyor-track {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 50px, black calc(100% - 50px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 50px, black calc(100% - 50px), transparent);
+  }
 }
 @media (max-width: 640px) {
   .hero-l { padding: 32px 20px; }
@@ -136,6 +153,10 @@
   .strip-cell:nth-child(odd) { border-right: 0.5px solid var(--border); }
   .strip-cell:nth-child(1), .strip-cell:nth-child(2) { border-bottom: 0.5px solid var(--border); }
   .themes-row { padding: 12px 16px; }
+  .themes-conveyor-track {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+  }
   .metrics-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
@@ -248,18 +269,35 @@
 
 <!-- Themes strip -->
 <div class="themes-row">
-  <span class="tag">backend automation</span>
-  <span class="tag">distributed systems</span>
-  <span class="tag">ai inference</span>
-  <span class="tag">observability</span>
-  <span class="tag">realtime processing</span>
-  <span class="tag">cloud migration</span>
-  <span class="tag">reliability engineering</span>
-  <span class="tag">edge ai</span>
-  <span class="tag">rag systems</span>
-  <span class="tag">async architecture</span>
-  <span class="tag">latency optimization</span>
-  <span class="tag">system integration</span>
+  <div class="themes-conveyor-track">
+    <div class="themes-conveyor-belt">
+      <span class="tag">backend automation</span>
+      <span class="tag">distributed systems</span>
+      <span class="tag">ai inference</span>
+      <span class="tag">observability</span>
+      <span class="tag">realtime processing</span>
+      <span class="tag">cloud migration</span>
+      <span class="tag">reliability engineering</span>
+      <span class="tag">edge ai</span>
+      <span class="tag">rag systems</span>
+      <span class="tag">async architecture</span>
+      <span class="tag">latency optimization</span>
+      <span class="tag">system integration</span>
+      <!-- duplicate for seamless loop -->
+      <span class="tag">backend automation</span>
+      <span class="tag">distributed systems</span>
+      <span class="tag">ai inference</span>
+      <span class="tag">observability</span>
+      <span class="tag">realtime processing</span>
+      <span class="tag">cloud migration</span>
+      <span class="tag">reliability engineering</span>
+      <span class="tag">edge ai</span>
+      <span class="tag">rag systems</span>
+      <span class="tag">async architecture</span>
+      <span class="tag">latency optimization</span>
+      <span class="tag">system integration</span>
+    </div>
+  </div>
 </div>
 
 </div><!-- /page-wrap -->
