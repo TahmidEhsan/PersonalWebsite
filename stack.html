@@ -91,6 +91,10 @@
   .stack-layout { grid-template-columns: 1fr; }
   .stack-aside { border-left: none; border-top: 0.5px solid var(--border); padding: 28px 28px; }
   .theme-grid { grid-template-columns: 1fr 1fr; }
+  .conveyor-track {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 50px, black calc(100% - 50px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 50px, black calc(100% - 50px), transparent);
+  }
 }
 @media (max-width: 640px) {
   .page-inner { padding: 28px 16px 48px; }
@@ -98,6 +102,10 @@
   .theme-grid { grid-template-columns: 1fr 1fr; }
   .skill-cat { padding: 18px 16px; }
   .stack-aside { padding: 24px 16px; }
+  .conveyor-track {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent);
+  }
 }
 </style>
 </head>
