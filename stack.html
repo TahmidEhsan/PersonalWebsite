@@ -61,8 +61,27 @@
   padding: 5px 12px; background: var(--bg-raised);
   border: 0.5px solid var(--border); color: var(--text-2);
   transition: border-color .15s, color .15s;
+  white-space: nowrap; flex-shrink: 0;
 }
 .concept-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+.conveyor-track {
+  overflow: hidden;
+  margin-bottom: 48px;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+  mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+}
+.conveyor-belt {
+  display: flex;
+  gap: 8px;
+  width: max-content;
+  animation: conveyor 32s linear infinite;
+}
+.conveyor-belt:hover { animation-play-state: paused; }
+@keyframes conveyor {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
@@ -260,27 +279,50 @@
 
   <!-- Engineering concepts -->
   <div class="section-label fu fu-4">engineering concepts</div>
-  <div class="concepts-wrap fu fu-4">
-    <span class="concept-pill">data structures</span>
-    <span class="concept-pill">algorithms</span>
-    <span class="concept-pill">OOP + design patterns</span>
-    <span class="concept-pill">distributed systems</span>
-    <span class="concept-pill">async processing</span>
-    <span class="concept-pill">system design</span>
-    <span class="concept-pill">latency optimization</span>
-    <span class="concept-pill">observability</span>
-    <span class="concept-pill">REST API design</span>
-    <span class="concept-pill">ETL / ELT workflows</span>
-    <span class="concept-pill">message queues</span>
-    <span class="concept-pill">caching strategies</span>
-    <span class="concept-pill">drift detection</span>
-    <span class="concept-pill">model monitoring</span>
-    <span class="concept-pill">inference pipelines</span>
-    <span class="concept-pill">HTTP · DNS · TLS</span>
-    <span class="concept-pill">API authentication</span>
-    <span class="concept-pill">CI/CD pipelines</span>
-    <span class="concept-pill">Agile / SDLC</span>
-    <span class="concept-pill">reliability engineering</span>
+  <div class="conveyor-track fu fu-4">
+    <div class="conveyor-belt">
+      <span class="concept-pill">data structures</span>
+      <span class="concept-pill">algorithms</span>
+      <span class="concept-pill">OOP + design patterns</span>
+      <span class="concept-pill">distributed systems</span>
+      <span class="concept-pill">async processing</span>
+      <span class="concept-pill">system design</span>
+      <span class="concept-pill">latency optimization</span>
+      <span class="concept-pill">observability</span>
+      <span class="concept-pill">REST API design</span>
+      <span class="concept-pill">ETL / ELT workflows</span>
+      <span class="concept-pill">message queues</span>
+      <span class="concept-pill">caching strategies</span>
+      <span class="concept-pill">drift detection</span>
+      <span class="concept-pill">model monitoring</span>
+      <span class="concept-pill">inference pipelines</span>
+      <span class="concept-pill">HTTP · DNS · TLS</span>
+      <span class="concept-pill">API authentication</span>
+      <span class="concept-pill">CI/CD pipelines</span>
+      <span class="concept-pill">Agile / SDLC</span>
+      <span class="concept-pill">reliability engineering</span>
+      <!-- duplicate for seamless loop -->
+      <span class="concept-pill">data structures</span>
+      <span class="concept-pill">algorithms</span>
+      <span class="concept-pill">OOP + design patterns</span>
+      <span class="concept-pill">distributed systems</span>
+      <span class="concept-pill">async processing</span>
+      <span class="concept-pill">system design</span>
+      <span class="concept-pill">latency optimization</span>
+      <span class="concept-pill">observability</span>
+      <span class="concept-pill">REST API design</span>
+      <span class="concept-pill">ETL / ELT workflows</span>
+      <span class="concept-pill">message queues</span>
+      <span class="concept-pill">caching strategies</span>
+      <span class="concept-pill">drift detection</span>
+      <span class="concept-pill">model monitoring</span>
+      <span class="concept-pill">inference pipelines</span>
+      <span class="concept-pill">HTTP · DNS · TLS</span>
+      <span class="concept-pill">API authentication</span>
+      <span class="concept-pill">CI/CD pipelines</span>
+      <span class="concept-pill">Agile / SDLC</span>
+      <span class="concept-pill">reliability engineering</span>
+    </div>
   </div>
 
 </div>

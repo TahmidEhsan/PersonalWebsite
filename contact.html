@@ -73,6 +73,19 @@
 .tl .dim { color: var(--text-3); }
 .tl .n { color: var(--accent); }
 
+.hackathon-photo {
+  border-top: 0.5px solid var(--border);
+}
+.hackathon-photo img {
+  width: 100%; display: block;
+  filter: grayscale(18%);
+}
+.hackathon-caption {
+  font-family: var(--mono); font-size: 10px; color: var(--text-3);
+  letter-spacing: .06em; padding: 10px 28px;
+  border-top: 0.5px solid var(--border);
+}
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .page-inner { padding: 40px 28px 60px; }
@@ -143,6 +156,11 @@
           </div>
           <div class="channel-arrow">↗</div>
         </a>
+
+        <div class="hackathon-photo">
+          <img src="hackathonPic.jpg" alt="My first hackathon">
+          <div class="hackathon-caption">My first hackathon (moments before disaster)</div>
+        </div>
 
       </div>
     </div>
