@@ -20,16 +20,12 @@
 .skill-cat { border-bottom: 0.5px solid var(--border); padding: 24px 28px; }
 .skill-cat:last-child { border-bottom: none; }
 .skill-cat-name { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px; }
-.skill-rows { display: flex; flex-direction: column; gap: 10px; }
-.skill-row { display: flex; align-items: center; gap: 12px; }
-.skill-name { font-size: 12px; color: var(--text-2); flex: 1; }
-.skill-tier {
-  font-family: var(--mono); font-size: 9px; letter-spacing: .08em;
-  padding: 2px 8px; border: 0.5px solid; flex-shrink: 0;
+.skill-cat-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-chip {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .04em;
+  padding: 4px 12px; background: var(--bg-raised);
+  border: 0.5px solid var(--border); color: var(--text-2);
 }
-.tier-primary { color: var(--accent); border-color: rgba(201,186,155,.25); }
-.tier-working { color: var(--text-2); border-color: var(--border-md); }
-.tier-familiar { color: var(--text-3); border-color: var(--border); }
 
 /* Aside */
 .aside-section { margin-bottom: 28px; }
@@ -96,7 +92,6 @@
   .theme-grid { grid-template-columns: 1fr 1fr; }
   .skill-cat { padding: 18px 16px; }
   .stack-aside { padding: 24px 16px; }
-  .skill-row { flex-wrap: wrap; gap: 6px; }
 }
 </style>
 </head>
@@ -142,38 +137,72 @@
 
       <div class="skill-cat">
         <div class="skill-cat-name">core languages</div>
-        <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">Python</div><div class="skill-tier tier-primary">primary</div></div>
-          <div class="skill-row"><div class="skill-name">Java</div><div class="skill-tier tier-working">working</div></div>
-          <div class="skill-row"><div class="skill-name">C++</div><div class="skill-tier tier-working">working</div></div>
-          <div class="skill-row"><div class="skill-name">C#</div><div class="skill-tier tier-familiar">familiar</div></div>
+        <div class="skill-cat-chips">
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">Java</span>
+          <span class="skill-chip">C++</span>
+          <span class="skill-chip">JavaScript</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">C#</span>
+          <span class="skill-chip">C</span>
         </div>
       </div>
 
       <div class="skill-cat">
-        <div class="skill-cat-name">ai inference &amp; orchestration</div>
-        <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">TensorFlow</div><div class="skill-tier tier-primary">primary</div></div>
-          <div class="skill-row"><div class="skill-name">PyTorch</div><div class="skill-tier tier-working">working</div></div>
-          <div class="skill-row"><div class="skill-name">LlamaIndex</div><div class="skill-tier tier-working">working</div></div>
+        <div class="skill-cat-name">ai &amp; machine learning</div>
+        <div class="skill-cat-chips">
+          <span class="skill-chip">TensorFlow</span>
+          <span class="skill-chip">PyTorch</span>
+          <span class="skill-chip">LlamaIndex</span>
+          <span class="skill-chip">OCR Pipelines</span>
+          <span class="skill-chip">RAG Systems</span>
+          <span class="skill-chip">Edge AI</span>
         </div>
       </div>
 
       <div class="skill-cat">
-        <div class="skill-cat-name">backend &amp; interface layer</div>
-        <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">FastAPI</div><div class="skill-tier tier-primary">primary</div></div>
-          <div class="skill-row"><div class="skill-name">Node.js</div><div class="skill-tier tier-working">working</div></div>
-          <div class="skill-row"><div class="skill-name">React</div><div class="skill-tier tier-familiar">familiar</div></div>
+        <div class="skill-cat-name">backend &amp; application layer</div>
+        <div class="skill-cat-chips">
+          <span class="skill-chip">FastAPI</span>
+          <span class="skill-chip">Node.js</span>
+          <span class="skill-chip">React</span>
+          <span class="skill-chip">Next.js</span>
+          <span class="skill-chip">Angular</span>
+          <span class="skill-chip">Django</span>
+          <span class="skill-chip">Flask</span>
         </div>
       </div>
 
       <div class="skill-cat">
-        <div class="skill-cat-name">cloud &amp; infra</div>
-        <div class="skill-rows">
-          <div class="skill-row"><div class="skill-name">AWS</div><div class="skill-tier tier-working">working</div></div>
-          <div class="skill-row"><div class="skill-name">Docker</div><div class="skill-tier tier-working">working</div></div>
-          <div class="skill-row"><div class="skill-name">Linux</div><div class="skill-tier tier-working">working</div></div>
+        <div class="skill-cat-name">cloud &amp; infrastructure</div>
+        <div class="skill-cat-chips">
+          <span class="skill-chip">AWS</span>
+          <span class="skill-chip">Docker</span>
+          <span class="skill-chip">Kubernetes</span>
+          <span class="skill-chip">Linux</span>
+          <span class="skill-chip">Git / GitHub</span>
+          <span class="skill-chip">Jira</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-name">data &amp; analytics</div>
+        <div class="skill-cat-chips">
+          <span class="skill-chip">MongoDB</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">Power BI</span>
+          <span class="skill-chip">Looker Studio</span>
+          <span class="skill-chip">Tableau</span>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-name">engineering foundations</div>
+        <div class="skill-cat-chips">
+          <span class="skill-chip">SOLID Principles</span>
+          <span class="skill-chip">Unit Testing</span>
+          <span class="skill-chip">Integration Testing</span>
         </div>
       </div>
 
