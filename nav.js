@@ -46,7 +46,7 @@
         <a href="https://github.com/TahmidEhsan" target="_blank">github</a>
         <a href="https://linkedin.com/in/tahmide" target="_blank">linkedin</a>
         <a href="mailto:tahmid.ehsan@torontomu.ca">email</a>
-        <a href="https://drive.google.com/file/d/1FpR7--g1Dq0NJvpyK1-gQ79gv53-cJZ3/view" target="_blank">resume ↗</a>
+        <a href="https://drive.google.com/file/d/1FpR7--g1Dq0NJvpyK1-gQ79gv53-cJZ3/view?usp=sharing" target="_blank">resume ↗</a>
       </div>
     </footer>
   `);
